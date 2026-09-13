@@ -10,7 +10,7 @@ build_root="$(mktemp -d "$output_root/release.XXXXXX")"
 
 xcodebuild \
   -project "$project_root/ALEXLANDS.xcodeproj" \
-  -target "Enyell TS" \
+  -target "ALEXLANDS" \
   -configuration Release \
   -arch arm64 \
   -sdk iphoneos \
@@ -22,7 +22,7 @@ xcodebuild \
   DEPLOYMENT_POSTPROCESSING=YES \
   build
 
-app_path="$build_root/products/Enyell TS.app"
+app_path="$build_root/products/ALEXLANDS.app"
 plist_path="$app_path/Info.plist"
 display_name="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$plist_path")"
 bundle_name="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleName' "$plist_path")"
@@ -30,8 +30,8 @@ version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plis
 build_number="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist_path")"
 executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$plist_path")"
 
-if [[ "$display_name" != "Enyell TS" || "$bundle_name" != "Enyell TS" ]]; then
-  echo "Error: el producto compilado no tiene el nombre Enyell TS." >&2
+if [[ "$display_name" != "ALEXLANDS" || "$bundle_name" != "ALEXLANDS" ]]; then
+  echo "Error: el producto compilado no tiene el nombre ALEXLANDS." >&2
   exit 1
 fi
 if [[ ! -f "$app_path/es.lproj/Localizable.strings" ]]; then
@@ -44,8 +44,8 @@ if [[ ! -s "$app_path/$executable" ]]; then
 fi
 
 mkdir -p "$build_root/Payload"
-/usr/bin/ditto "$app_path" "$build_root/Payload/Enyell TS.app"
-ipa_path="$build_root/Enyell TS-${version}-${build_number}-unsigned.ipa"
+/usr/bin/ditto "$app_path" "$build_root/Payload/ALEXLANDS.app"
+ipa_path="$build_root/ALEXLANDS-${version}-${build_number}-unsigned.ipa"
 /usr/bin/ditto -c -k --keepParent "$build_root/Payload" "$ipa_path"
 
 echo "IPA sin firmar: $ipa_path"
@@ -65,12 +65,12 @@ if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
   app_bytes="$(python3 -c 'import pathlib, sys; print(sum(p.stat().st_size for p in pathlib.Path(sys.argv[1]).rglob("*") if p.is_file() and not p.is_symlink()))' "$app_path")"
   ipa_bytes="$(/usr/bin/stat -f '%z' "$ipa_path")"
   {
-    printf '## Enyell TS %s — compilación %s\n\n' "$version" "$build_number"
+    printf '## ALEXLANDS %s — compilación %s\n\n' "$version" "$build_number"
     printf '| Resultado | Valor |\n| --- | --- |\n'
     printf '| Nombre de la app | %s |\n' "$display_name"
     printf '| Español | Incluido |\n'
     printf '| App extraída (suma de archivos) | %s bytes |\n' "$app_bytes"
     printf '| IPA comprimido | %s bytes |\n\n' "$ipa_bytes"
-    printf 'Descarga el artefacto **Enyell-TS-%s-%s**, extrae el ZIP y firma el archivo `.ipa` con GBox.\n' "$version" "$build_number"
+    printf 'Descarga el artefacto **ALEXLANDS-%s-%s**, extrae el ZIP y firma el archivo `.ipa` con GBox.\n' "$version" "$build_number"
   } >> "$GITHUB_STEP_SUMMARY"
 fi

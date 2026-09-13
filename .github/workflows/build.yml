@@ -1,4 +1,4 @@
-name: Compilar Enyell TS
+name: Compilar ALEXLANDS
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: enyell-ts-${{ github.ref }}
+  group: ALEXLANDS-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,15 +25,15 @@ jobs:
       - name: Mostrar versión de Xcode
         run: xcodebuild -version
 
-      - name: Compilar y verificar Enyell TS
+      - name: Compilar y verificar ALEXLANDS
         id: ipa
         shell: bash
-        run: bash scripts/build_release.sh 2>&1 | tee "$RUNNER_TEMP/Enyell-TS-build.log"
+        run: bash scripts/build_release.sh 2>&1 | tee "$RUNNER_TEMP/ALEXLANDS-build.log"
 
       - name: Publicar IPA para GBox
         uses: actions/upload-artifact@v4
         with:
-          name: Enyell-TS-${{ steps.ipa.outputs.version }}-${{ steps.ipa.outputs.build_number }}
+          name: ALEXLANDS-${{ steps.ipa.outputs.version }}-${{ steps.ipa.outputs.build_number }}
           path: ${{ steps.ipa.outputs.ipa_path }}
           if-no-files-found: error
           compression-level: 0
@@ -43,7 +43,8 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: Enyell-TS-error-de-compilacion
-          path: ${{ runner.temp }}/Enyell-TS-build.log
+          name: ALEXLANDS-error-de-compilacion
+          path: ${{ runner.temp }}/ALEXLANDS-build.log
           if-no-files-found: ignore
           retention-days: 7
+

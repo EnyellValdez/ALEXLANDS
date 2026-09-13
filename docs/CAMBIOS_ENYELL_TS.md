@@ -38,7 +38,7 @@ No necesitas un Mac propio. GitHub Actions compila en un servidor macOS con Xcod
 1. En **GitHub Desktop**, abre este repositorio, incluye todos los cambios de la app, `.github/workflows/build.yml` y `scripts/build_release.sh`, y crea el commit.
 2. Pulsa **Push origin**. El flujo se inicia automáticamente al subir cambios a `main` o `master`.
 3. En el repositorio de GitHub, abre **Actions → Compilar ALEXLANDS** y entra en la ejecución más reciente.
-4. Cuando termine correctamente, en **Artifacts** descarga **Enyell-TS-3.0-9**.
+4. Cuando termine correctamente, en **Artifacts** descarga **ALEXLANDS-3.0-9**.
 5. Extrae el ZIP descargado. Dentro estará `ALEXLANDS-3.0-9-unsigned.ipa`; ese archivo se firma con **GBox**.
 
 También puedes iniciarlo desde **Actions → Compilar ALEXLANDS → Run workflow** una vez que el flujo esté disponible en la rama predeterminada. La descarga de artefactos es el mecanismo de entrega de archivos de [GitHub Actions](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts).
